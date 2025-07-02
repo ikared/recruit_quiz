@@ -182,5 +182,14 @@ QuestionList CreatePhysicsExam()
 			"すると、ばねの長さがそれぞれXcm伸びて静止した。\n" +
 			"Xの値をを小数点以下第2位を四捨五入して求めよ。", answer });
 	}//ばね
+
+	{//振り子
+		int l = uniform_int_distribution<>(1, 10)(rd);	//ばね定数1(N/m)
+		int m = uniform_int_distribution<>(1, 10)(rd);		//質量(g)
+		questions.push_back({
+			"長さ" + to_string(l + 1) + "mの糸に質量" + to_string(m) +
+			"kgの重りをつけ、わずかに揺らしたところ、周期はx秒出会った。xの値を求めよ。\n" +
+			"なお、重力加速度gと円周率πについて、π = √gが成り立つものとする。", to_string(2 * 1)});
+	}//振り子
 	return questions;
 }
