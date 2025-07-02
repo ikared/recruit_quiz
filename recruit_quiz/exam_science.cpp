@@ -126,5 +126,23 @@ QuestionList CreatePhysicsExam()
 			to_string(h) + "cmの物体を水に沈めようとしたところ、Xcm沈んで静止した。\n" +
 			"Xの値を小数点以下第1位まで求めよ。", answer });
 	}//浮力
+
+	{//ばね
+		int a = uniform_int_distribution<>(10, 30)(rd) * 10;	//自然長(cm)
+		int x = uniform_int_distribution<>(1, a / 2)(rd);		//自然長からの変化量(cm)
+		int m = uniform_int_distribution<>(1, 20)(rd) * 10;		//質量(g)
+		int k = 100 * m / x + 5;			//kの100倍を求め、四捨五入のため5を足す
+		string answer = to_string(k / 100);
+		k /= 10;
+		if (k % 10) {
+			answer += '.';
+			answer += '0' + k % 10;
+		}
+		questions.push_back({ 
+			"重力加速度を10m/s^2とする。\n長さ" + to_string(x) + "cmのばねの先端に" + to_string(m) +
+			"gの重りをつけて、天井から吊り下げた。\nすると、ばねの長さが" +
+			to_string(a + x) + "cmになった。\n" +
+			"このばねの「ばね定数」を小数点以下第2位を四捨五入して求めよ。", answer });
+	}//ばね
 	return questions;
 }
