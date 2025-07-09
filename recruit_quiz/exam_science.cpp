@@ -184,7 +184,7 @@ QuestionList CreatePhysicsExam()
 	}//‚Î‚Ë
 
 	{//U‚èq
-		int l = uniform_int_distribution<>(1, 10)(rd);	//‚Î‚Ë’è”1(N/m)
+		int l = uniform_int_distribution<>(1, 10)(rd);	//’·‚³(m)‚Ì•½•ûª
 		int m = uniform_int_distribution<>(1, 10)(rd);		//¿—Ê(g)
 		questions.push_back({
 			"’·‚³" + to_string(l + 1) + "m‚Ì…‚É¿—Ê" + to_string(m) +
