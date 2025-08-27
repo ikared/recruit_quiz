@@ -151,8 +151,31 @@ int main()
 		if(answer == e.a){
 			cout << "正解！\n";
 		}
-		else {
+		else if (e.b.empty()){
+			//答えが一つだけの場合
 			cout << "間違い！正解は" << e.a << "\n";
 		}
+		else {
+			//答えが複数ある場合、いずれかと一致すれば正解とする
+			bool isMatch = false;
+			for (const auto& b : e.b) {
+				if (answer == b) {
+					isMatch = true;	//一致する答えが見つかった
+					break;
+				}
+			}
+
+			//比較結果を出力
+			if (isMatch) {
+				cout << "正解！\n";
+			}
+			else {
+				cout << "間違い！正解は" << e.a << "(または";
+				for (auto& b : e.b) {
+					cout << "、" << b;
+				}
+				cout << ")\n";
+			}
+		}//if answer == e.a
 	}	//for questions
  }
