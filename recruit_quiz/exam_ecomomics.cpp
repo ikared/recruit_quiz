@@ -97,6 +97,12 @@ QuestionList CreateEconomicsExam()
 
 			questions.push_back({ s, question.answers[index][0]});
 
+			//答えが複数ありうる場合、それらを「答えb」の配列代入
+			const auto& answer = question.answers[index];
+			if (answer.size() > 1) {
+				questions.back().b.assign(answer.begin() + 1, answer.end());
+			}
 		}	//for j < quizCount
 	}	//for i < genreCount
+	return questions;
 }
