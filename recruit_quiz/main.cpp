@@ -36,13 +36,23 @@ int main()
 	cout << "[リクルート試験対策クイズ]\n";
 
 	cout << "教科を選んでください\n";
+	cout << "0=総合テスト\n";
 	for (int i = 0; i < size(subjectData); i++) {
 		cout << i + 1 << '=' << subjectData[i].name << '\n';
 	}
+
 	int subject;
 	cin >> subject;
 	if (subject > 0 && subject <= size(subjectData)) {
 		questions = subjectData[subject - 1].create();
+	}
+	else if (subject == 0) {
+		//総合テスト
+		questions.clear();
+		for (int i = 0; i < size(subjectData); i++) {
+			QuestionList tmp = subjectData[i].create();
+			questions.insert(questions.end(), tmp.begin(), tmp.end());
+		}
 	}
 
 	for (const auto& e : questions) {
