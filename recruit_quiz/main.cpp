@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 #include <random>
+#include <fstream>
+#include <time.h>
 
 using namespace std;
 
@@ -31,7 +33,7 @@ int main()
 		{"経済", CreateEconomicsExam},
 	};
 
-	vector <Question> questions(3); 
+	vector <Question> questions(3);
 
 	cout << "[リクルート試験対策クイズ]\n";
 
@@ -72,11 +74,11 @@ int main()
 			answer = ascii;
 		}
 
-		if(answer == e.a){
+		if (answer == e.a) {
 			cout << "正解！\n";
 			correctCounts[currentSubjectNo]++;	//正答数を増やす
 		}
-		else if (e.b.empty()){
+		else if (e.b.empty()) {
 			//答えが一つだけの場合
 			cout << "間違い！正解は" << e.a << "\n";
 		}
@@ -130,4 +132,45 @@ int main()
 		}
 		cout << "合計：" << totalCorrectCount << '/' << questions.size() << '\n';
 	}
- }
+
+	//成績をファイルに出力する
+	static const char filename[] = "リクルート対策試験成績表.txt";
+	ofstream ofs(filename, ios_base::app);
+	if (!ofs) {
+		cerr << "エラー:" << filename << "を開けません\n";
+	}
+	else {
+		//現在の時刻(協定世界時)を取得
+		const time_t t = time(nullptr);
+
+		//協定世界時を時間構造体型に変換
+		tm examDate;
+		localtime_s(&examDate, &t);
+
+		//時間構造体を文字列に変換
+		char strDate[100];
+		strftime(strDate, size(strDate), "%Y/%m/%d(%a) %T", &examDate);
+
+		if (subject > 0 && subject <= size(subjectData)) {
+			//教科テストの場合、試験した教科の成績だけを出力し、それ以外は空欄とする
+			ofs << strDate;
+			for (int i = 0; i < size(subjectData); i++) {
+				ofs << ',';
+				if (i == subject - 1) {
+					ofs << correctCounts[0] << '/' << questions.size();
+				}
+			}
+			ofs << '\n';
+			cout << "成績を" << filename << "に出力しました\n";
+		}
+		else if (subject == 0) {
+			//総合テストの場合、全ての教科の成績を出力する
+			ofs << strDate;
+			for (int i = 0; i < size(subjectData); i++) {
+				ofs << ',' << correctCounts[i] << '/' << questionCounts[i];
+			}
+			ofs << '\n';
+			cout << "成績を" << filename << "に出力しました\n";
+		}
+	}//if !ofs
+}
