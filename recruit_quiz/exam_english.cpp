@@ -239,3 +239,13 @@ QuestionList CreateEnglishPhraseExam()
 	}	//switch (type)
 	return questions;
 }
+
+//‰pŒê‚Ì–â‘è‚ğ‚Ü‚Æ‚ß‚Äì¬‚·‚é
+QuestionList CreateEnglishExam()
+{
+	QuestionList questions;
+	questions = CreateEnglishWordExam();
+	QuestionList phraseExam = CreateEnglishPhraseExam();
+	questions.insert(questions.end(), phraseExam.begin(), phraseExam.end());
+	return questions;
+}

@@ -31,9 +31,7 @@ int main()
 		questions = CreateJapaneseExam();
 	}
 	else if (subject == 3) {
-		questions = CreateEnglishWordExam();
-		QuestionList phraseExam = CreateEnglishPhraseExam();
-		questions.insert(questions.end(), phraseExam.begin(), phraseExam.end());
+		questions = CreateEnglishExam();
 	}
 	else if (subject == 4) {
 		questions = CreatePhysicsExam();
